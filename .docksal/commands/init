@@ -159,12 +159,12 @@ db_updates ()
 {
 	cd $DOCROOT_PATH
 	echo-yellow "Applying DB updates..."
-	
+
 	set -x
 	fin drush -l $SITE_DIRECTORY status
 	fin drush -l $SITE_DIRECTORY rr # resolve moved modules
-	fin drush -l $SITE_DIRECTORY updb -y # run necessary db updaes
 	#fin drush -l $SITE_DIRECTORY fra -y # revert features
+	fin drush -l $SITE_DIRECTORY updb -y # run necessary db updates
 	fin drush -l $SITE_DIRECTORY cc all # clear caches
 	fin drush -l $SITE_DIRECTORY cron -v
 	set +x
