@@ -137,10 +137,8 @@ db_create ()
 	echo-yellow "Creating DB ${1}..."
 	
 	local database="${1}"
-	local mysql_exec="mysql -h db --user=root --password=${MYSQL_ROOT_PASSWORD} -e ";
-	local query="DROP DATABASE IF EXISTS ${database}; CREATE DATABASE ${database}; GRANT ALL ON ${database}.* TO '${MYSQL_USER}'@'%'"
-	
-	fin exec "${mysql_exec} \"${query}\""
+	fin db drop ${database}
+	fin db create ${database}
 }
 
 # Import database from the source site alias
