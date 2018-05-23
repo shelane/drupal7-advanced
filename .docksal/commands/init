@@ -98,6 +98,10 @@ init_settings ()
 	
 	# Behat
 	copy_settings_file 'tests/behat/behat.yml.dist' 'tests/behat/behat.yml'
+
+	# Drush aliases
+	project=$(sed -e "s/.docksal//g" <<< $VIRTUAL_HOST) # gets local project name from virtual_host
+	fin exec sed -i "s/%project%/${project}/g" "/var/www/drush/aliases/drupal7-advanced.aliases.drushrc.php"
 }
 
 # Fix file/folder permissions
@@ -127,7 +131,7 @@ site_install_anothersite ()
 	db_create 'anothersite'
 	# Install site
 	fin exec "php -d sendmail_path=/bin/true /usr/local/bin/drush @drupal7-advanced.anothersite site-install -y --site-name='Another Drupal 7 Site'"
-	echo -e "Open ${yellow}http://anothersite.drupal7-advanced.docksal${NC} in your browser to view site1"
+	echo -e "Open ${yellow}http://anothersite.${VIRTUAL_HOST}${NC} in your browser to view site1"
 }
 
 # Create a new DB
